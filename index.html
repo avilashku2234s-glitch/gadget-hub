@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadget Hub | Premium Tech Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .gadget-card:hover img { transform: scale(1.05); }
+        /* Active Category Style */
+        .active-cat { background-color: #e0e7ff !important; border: 2px solid #4338ca; }
+    </style>
+</head>
+<body class="pb-20 md:pb-0">
+
+    <header class="bg-indigo-700 text-white sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <h1 class="text-2xl font-extrabold tracking-tight cursor-pointer" onclick="window.location.reload()">Gadget<span class="text-cyan-400">Hub</span></h1>
+            
+            <div class="hidden md:flex flex-1 mx-10">
+                <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search gadgets, laptops..." class="w-full py-2 px-4 text-black rounded-lg outline-none focus:ring-2 focus:ring-cyan-400">
+            </div>
+
+            <div class="relative cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-white border-b overflow-x-auto no-scrollbar">
+        <div class="flex justify-between min-w-max p-4 gap-8 md:justify-center" id="categoryList">
+            
+            <div onclick="loadProducts('All', this)" class="cat-item flex flex-col items-center gap-2 cursor-pointer group active-cat p-2 rounded-xl transition-all">
+                <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                </div>
+                <span class="text-xs font-bold text-gray-700">All</span>
+            </div>
+
+            <div onclick="loadProducts('Mobiles', this)" class="cat-item flex flex-col items-center gap-2 cursor-pointer group p-2 rounded-xl transition-all">
+                <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                </div>
+                <span class="text-xs font-bold text-gray-700">Mobiles</span>
+            </div>
+
+            <div onclick="loadProducts('Laptops', this)" class="cat-item flex flex-col items-center gap-2 cursor-pointer group p-2 rounded-xl transition-all">
+                <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                </div>
+                <span class="text-xs font-bold text-gray-700">Laptops</span>
+            </div>
+
+            <div onclick="loadProducts('Watches', this)" class="cat-item flex flex-col items-center gap-2 cursor-pointer group p-2 rounded-xl transition-all">
+                <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <span class="text-xs font-bold text-gray-700">Watches</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto p-4 lg:p-8">
+        <h2 id="categoryTitle" class="text-xl font-black text-gray-800 uppercase mb-6 tracking-wide">All Gadgets</h2>
+        <div id="productContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8">
+            </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, query, where, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD5pKW4Fi6CfQzW58RBoPA5fIL4JIfJoH0",
+            authDomain: "gadget-hub-3b6e5.firebaseapp.com",
+            projectId:  "gadget-hub-3b6e5",
+            storageBucket: "gadget-hub-3b6e5.firebasestorage.app",
+            messagingSenderId: "393761011089",
+            appId: "1:393761011089:web:0c6ff49e65d05aa3ca9630"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.loadProducts = function(category, element) {
+            // UI Update: Active class handle karein
+            document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active-cat'));
+            if(element) element.classList.add('active-cat');
+
+            const container = document.getElementById('productContainer');
+            const title = document.getElementById('categoryTitle');
+            title.innerText = category === 'All' ? 'All Gadgets' : category;
+
+            const productsRef = collection(db, "products");
+            let q;
+
+            // Strict Filtering Logic
+            if (category === 'All') {
+                q = query(productsRef, orderBy("createdAt", "desc"));
+            } else {
+                // Yahan ensure karein ki 'category' ki value wahi ho jo Admin Panel me select ki thi
+                q = query(productsRef, where("category", "==", category));
+            }
+
+            onSnapshot(q, (snapshot) => {
+                container.innerHTML = '';
+                if (snapshot.empty) {
+                    container.innerHTML = `<div class="col-span-full text-center py-20 text-gray-400">Abhi yahan koi product nahi hai.</div>`;
+                    return;
+                }
+                snapshot.forEach((doc) => {
+                    const p = doc.data();
+                    container.innerHTML += `
+                        <div class="gadget-card bg-white p-4 rounded-2xl shadow-sm border border-gray-100 transition-all">
+                            <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                                <img src="${p.image}" class="h-40 mx-auto object-contain">
+                            </div>
+                            <p class="text-[10px] text-indigo-500 font-black uppercase">${p.category}</p>
+                            <h3 class="text-sm font-bold text-gray-800 truncate">${p.name}</h3>
+                            <div class="flex items-center gap-2 mt-2">
+                                <p class="text-indigo-600 font-black">₹${p.price}</p>
+                                ${p.oldPrice ? `<p class="text-gray-400 text-xs line-through">₹${p.oldPrice}</p>` : ''}
+                            </div>
+                            <a href="${p.link}" target="_blank" class="block w-full mt-4 bg-indigo-700 text-white text-center py-2 rounded-lg font-bold text-sm hover:bg-indigo-800 transition-colors">Buy Now</a>
+                        </div>`;
+                });
+            });
+        }
+
+        // Search Functionality
+        window.searchProducts = function() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('gadget-card');
+            
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+                if (name.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        loadProducts('All');
+    </script>
+</body>
+</html>
